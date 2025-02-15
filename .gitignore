@@ -1,5 +1,5 @@
 data
 plot/figure
-.o
-.mod
+*.o
+*.mod
 a.out
