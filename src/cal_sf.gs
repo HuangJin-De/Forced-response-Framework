@@ -6,7 +6,7 @@ model.2="SCALE"
 model.3="VVM"
 
 i=1
-while(i<=3)
+while(i<=1)
 
 if (model.i=VVM); ts=2; te=2400; pw="pw"; endif
 if (model.i=SCALE); ts=1; te=2399; pw="pw/1000"; endif
