@@ -6,14 +6,14 @@ model.2="SCALE"
 model.3="VVM"
 
 i=1
-while(i<=1)
+while(i<=3)
 
-*if (model.i=VVM); ts=2; te=2400; pw="pw"; endif
-*if (model.i=SCALE); ts=1; te=2399; pw="pw/1000"; endif
-*if (model.i=CM1);  ts=2; te=2400; pw="pwat*1000"; endif
+if (model.i=VVM); ts=2; te=2400; pw="pw"; endif
+if (model.i=SCALE); ts=1; te=2399; pw="pw/1000"; endif
+if (model.i=CM1);  ts=2; te=2400; pw="pwat*1000"; endif
 
-e=5
-while(e<=4)
+e=1
+while(e<=5)
 
 if (model.i=VVM); gsctl="gs_ctl_files/dynamic.ctl" ; endif
 if (model.i=SCALE); gsctl="hist.ctl" ; endif
