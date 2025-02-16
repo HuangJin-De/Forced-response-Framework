@@ -1,4 +1,6 @@
 data
+*.dat
+*.nc
 plot/figure
 *.o
 *.mod
