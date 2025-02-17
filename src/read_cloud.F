@@ -26,6 +26,7 @@ if (trim(model)=='VVM') then
   write(*,*) "read VVM data at step:",step
   
   allocate(q(nx,ny,nz,2))
+  q=0.
 
   ierr = nf90_open(trim(fname),NF90_NOWRITE,fid1)
   IF (ierr/=nf90_noerr) WRITE(*,*) "open fail"
@@ -45,6 +46,7 @@ elseif (trim(model)=="SCALE") then
   write(*,*) "read SCALE data at step:",step
 
   allocate(q(nx,ny,nz,4))
+  q=0.
 
   ierr = nf90_open(trim(fname),NF90_NOWRITE,fid1)
   IF (ierr/=nf90_noerr) WRITE(*,*) "open fail"
@@ -54,15 +56,15 @@ elseif (trim(model)=="SCALE") then
   IF (ierr/=nf90_noerr) WRITE(*,*) "read fail"
   ierr = nf90_inq_varid(fid1,"QI",varid1)
   IF (ierr/=nf90_noerr) WRITE(*,*) "var_inq fail"
-  ierr = nf90_get_var(fid1,varid1,q(:,:,2:nz,1),start=(/ 1,1,1,step /),count=(/ nx,ny,nz-1,1 /))
+  ierr = nf90_get_var(fid1,varid1,q(:,:,2:nz,2),start=(/ 1,1,1,step /),count=(/ nx,ny,nz-1,1 /))
   IF (ierr/=nf90_noerr) WRITE(*,*) "read fail"
   ierr = nf90_inq_varid(fid1,"QS",varid1)
   IF (ierr/=nf90_noerr) WRITE(*,*) "var_inq fail"
-  ierr = nf90_get_var(fid1,varid1,q(:,:,2:nz,1),start=(/ 1,1,1,step /),count=(/ nx,ny,nz-1,1 /))
+  ierr = nf90_get_var(fid1,varid1,q(:,:,2:nz,3),start=(/ 1,1,1,step /),count=(/ nx,ny,nz-1,1 /))
   IF (ierr/=nf90_noerr) WRITE(*,*) "read fail"
   ierr = nf90_inq_varid(fid1,"QG",varid1)
   IF (ierr/=nf90_noerr) WRITE(*,*) "var_inq fail"
-  ierr = nf90_get_var(fid1,varid1,q(:,:,2:nz,1),start=(/ 1,1,1,step /),count=(/ nx,ny,nz-1,1 /))
+  ierr = nf90_get_var(fid1,varid1,q(:,:,2:nz,4),start=(/ 1,1,1,step /),count=(/ nx,ny,nz-1,1 /))
   IF (ierr/=nf90_noerr) WRITE(*,*) "read fail"
   ierr = nf90_close(fid1)
   IF (ierr/=nf90_noerr) WRITE(*,*) "close fail"
@@ -72,26 +74,27 @@ elseif (trim(model)=="CM1") then
   write(*,*) "read CM1 data at step:",step
 
   allocate(q(nx,ny,nz,4))
+  q=0.
   
   fid1=10
   open(fid1,file=trim(fname),access="direct",recl=nx*ny*4)
   
-  do idum2=1,nz
+  do idum2=1,nz-1
     ! qc
     idum1=33+5*nz ! 33 2D and 5 3D fields
-    read(fid1,rec=idum1+idum2) q(:,:,idum2,1)
+    read(fid1,rec=idum1+idum2) q(:,:,idum2+1,1)
 
     ! qi 
     idum1=33+7*nz ! 33 2D and 7 3D fields
-    read(fid1,rec=idum1+idum2) q(:,:,idum2,2)
+    read(fid1,rec=idum1+idum2) q(:,:,idum2+1,2)
 
     ! qs 
     idum1=33+8*nz ! 33 2D and 8 3D fields
-    read(fid1,rec=idum1+idum2) q(:,:,idum2,3)
+    read(fid1,rec=idum1+idum2) q(:,:,idum2+1,3)
 
     ! qg 
     idum1=33+9*nz ! 33 2D and 9 3D fields
-    read(fid1,rec=idum1+idum2) q(:,:,idum2,4)
+    read(fid1,rec=idum1+idum2) q(:,:,idum2+1,4)
   enddo
 
   close(fid1) 

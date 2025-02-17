@@ -76,7 +76,7 @@ do
 
 
 
-    elif [ $model == 'CM1' ]
+    elif [ $model == 'CM1-done' ]
     then
 
 
